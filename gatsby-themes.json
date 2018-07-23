@@ -1,7 +1,7 @@
 {
   "themeDirectory": "themes",
   "themes": {
-    "starter-theme-1": {
+    "gatsby-starter-theme-v1": {
       "header": {
         "background": "red"
       }
