@@ -2,11 +2,13 @@
   "themeDirectory": "themes",
   "themes": {
     "gatsby-starter-theme-identity-v1": {
+      "cms": "contentful",
       "header": {
         "background": "red"
       }
     },
     "starter-theme-2": {
+      "cms": "contentful",
       "header": {
         "background": "green"
       }
