@@ -1,0 +1,15 @@
+{
+  "themeDirectory": "themes",
+  "themes": {
+    "starter-theme-1": {
+      "header": {
+        "background": "red"
+      }
+    },
+    "starter-theme-2": {
+      "header": {
+        "background": "green"
+      }
+    }
+  }
+}
