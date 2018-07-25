@@ -1,49 +1,49 @@
-query:
-  - source: contentfulBio
-    args: |
+query: |
+  {
+    contentfulBio (
       name: {
         regex: "/identity/i"
       }
-    body: |
-      {
-        name
-        displayName
-        headline
-        photo {
-          sizes {
-            src
-          }
+    )
+    {
+      name
+      displayName
+      headline
+      photo {
+        sizes {
+          src
         }
       }
-  - source: allContentfulSocialProfiles
-    args: |
+    }
+
+    allContentfulSocialProfiles (
       filter: {
         name: {
           regex: "/(github|medium|twitter)/i"
         }
       }
-    body: |
-      {
-        edges {
-          node {
-            name
-            url
-            className
-          }
+    )
+    {
+      edges {
+        node {
+          name
+          url
+          className
         }
       }
-  - source: contentfulAsset
-    args: |
+    }
+    contentfulAsset (
       title: {
         regex: "/(nyc-chinatown-bw)/i"
       }
-    body: |
-      {
-        title
-        sizes(maxWidth: 1200, quality: 95) {
-          src
-        }
+    )
+    {
+      title
+      sizes(maxWidth: 1200, quality: 95) {
+        src
       }
+    }
+  }
 mappings:
   displayName:
     querySource: contentfulBio
