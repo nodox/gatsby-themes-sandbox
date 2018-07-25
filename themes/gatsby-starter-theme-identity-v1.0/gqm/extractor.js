@@ -8,6 +8,9 @@
 exports.getTemplateValueByKey = (key, mappings, queryResult) => {
   // TODO: Specific Gatsby Themes SDK. Should not be in GQM
 
+  // check if key in mapping
+  if (!mappings.hasOwnProperty(key)) return null
+
   const templateKey = key
   const userMap = mappings[templateKey]
 
