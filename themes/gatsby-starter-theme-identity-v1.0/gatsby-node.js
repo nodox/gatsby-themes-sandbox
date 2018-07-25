@@ -4,6 +4,15 @@ const { gqextract, gqloader } = require('./gqm')
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
+  const config = gqloader.load(path.resolve('./identity.yaml'))
+  const data = await gqloader.fetch(graphql, config.query)
+
+  const browserData = {
+    displayName: gqextract.getTemplateValueByKey('displayName', config.mappings, data),
+    headline: gqextract.getTemplateValueByKey('headline', config.mappings, data),
+    socialIcons: gqextract.getTemplateValueByKey('socialIcons', config.mappings, data),
+    displayPhoto: gqextract.getTemplateValueByKey('displayPhoto', config.mappings, data),
+    backgroundImage: gqextract.getTemplateValueByKey('backgroundImage', config.mappings, data),
   }
 
   createPage({
