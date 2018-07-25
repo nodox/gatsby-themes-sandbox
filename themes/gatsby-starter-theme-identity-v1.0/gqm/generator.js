@@ -13,8 +13,9 @@ function generateQueryTemplate (source, args, body) {
 
 exports.composeQuery = (queryList) => {
   var masterQuery = ''
-  queryList.forEach(({ source, args, body }) => {
-    let partial = generateQueryTemplate(source, args, body)
+  queryList.forEach(query => {
+    const { source, args, body } = query
+    const partial = generateQueryTemplate(source, args, body)
     masterQuery = masterQuery.concat(partial)
   })
 

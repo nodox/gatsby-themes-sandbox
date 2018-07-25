@@ -1,0 +1,62 @@
+query:
+  - source: contentfulBio
+    args: |
+      name: {
+        regex: "/identity/i"
+      }
+    body: |
+      {
+        name
+        displayName
+        headline
+        photo {
+          sizes {
+            src
+          }
+        }
+      }
+  - source: allContentfulSocialProfiles
+    args: |
+      filter: {
+        name: {
+          regex: "/(github|medium|twitter)/i"
+        }
+      }
+    body: |
+      {
+        edges {
+          node {
+            name
+            url
+            className
+          }
+        }
+      }
+  - source: contentfulAsset
+    args: |
+      title: {
+        regex: "/(nyc-chinatown-bw)/i"
+      }
+    body: |
+      {
+        title
+        sizes(maxWidth: 1200, quality: 95) {
+          src
+        }
+      }
+mappings:
+  displayName:
+    querySource: contentfulBio
+    field: displayName
+  headline:
+    querySource: contentfulBio
+    field: headline
+  displayPhoto:
+    querySource: contentfulBio
+    field: photo
+  socialIcons:
+    querySource: allContentfulSocialProfiles
+    field: edges
+  backgroundImage:
+    querySource: contentfulAsset
+    field: sizes
