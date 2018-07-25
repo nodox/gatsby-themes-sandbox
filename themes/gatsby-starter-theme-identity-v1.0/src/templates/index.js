@@ -3,6 +3,7 @@ import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 import styled, { css } from 'styled-components'
 import avatar from '../images/avatar.jpg';
+import bg from '../images/bg.jpg';
 import theme from '../../theme.json'
 import { injectGlobal } from 'styled-components';
 
@@ -47,16 +48,45 @@ function applyBackground(image) {
 }
 
 class Index extends React.Component {
-
   constructor(props) {
     super(props)
+    this.default = {
+      backgroundImage: {
+        src: bg,
+      },
+      displayPhoto: {
+        sizes: {
+          src: avatar,
+        },
+      },
+      displayName: 'Jane Doe',
+      headline: 'senior psychonautics engineer',
+      socialIcons: [
+        {
+          className: 'fa-twitter',
+          url: 'https://twitter.com',
+          name: 'Twitter',
+        },
+        {
+          className: 'fa-instagram',
+          url: 'https://instagram.com',
+          name: 'Instagram',
+        },
+        {
+          className: 'fa-facebook',
+          url: 'https://facebook.com',
+          name: 'Facebook'
+        },
+      ]
+    }
 
     this.data = this.props.pathContext.data
-    this.displayName = this.data.displayName
-    this.displayPhoto = this.data.displayPhoto
-    this.headline = this.data.headline
-    this.socialIcons = this.data.socialIcons
-    this.backgroundImage = this.data.backgroundImage
+
+    this.displayName = this.data.displayName || this.default.displayName
+    this.displayPhoto = this.data.displayPhoto || this.default.displayPhoto
+    this.headline = this.data.headline || this.default.headline
+    this.socialIcons = this.data.socialIcons || this.default.socialIcons
+    this.backgroundImage = this.data.backgroundImage || this.default.backgroundImage
   }
 
 
@@ -81,10 +111,11 @@ class Index extends React.Component {
 
     			<footer>
     				<ul className="icons">
-              {this.socialIcons.map(({ className, href, html }, idx) => {
+              {this.socialIcons.map((obj, idx) => {
+                const { name, url, className } = obj.node
                 return (
                   <li key={idx}>
-                    <a href={href} className={className}>{html}</a>
+                    <a href={url} className={className}>{name}</a>
                   </li>
                 )
               })}
