@@ -67,6 +67,16 @@ function getBackgroundImage(mappings, queryResult) {
   return queryResult['data'][backgroundImage.querySource][backgroundImage.field]
 }
 
+function getQueryValueByKey(key, mappings, query) {
+  const templateKey = key
+  const userMap = mappings[templateKey]
+
+  const source = userMap.querySource
+  const field = userMap.field
+
+  return query['data'][source][field]
+}
+
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
@@ -168,11 +178,11 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   }
 
   let browserData = {
-    displayName: getDisplayName(templateData.mappings, identityData),
-    headline: getHeadline(templateData.mappings, identityData),
-    socialIcons: getSocialIcons(templateData.mappings, identityData),
-    displayPhoto: getDisplayPhoto(templateData.mappings, identityData),
-    backgroundImage: getBackgroundImage(templateData.mappings, identityData),
+    displayName: getQueryValueByKey('displayName', templateData.mappings, identityData),
+    headline: getQueryValueByKey('headline', templateData.mappings, identityData),
+    socialIcons: getQueryValueByKey('socialIcons', templateData.mappings, identityData),
+    displayPhoto: getQueryValueByKey('displayPhoto', templateData.mappings, identityData),
+    backgroundImage: getQueryValueByKey('backgroundImage', templateData.mappings, identityData),
   }
 
   createPage({
