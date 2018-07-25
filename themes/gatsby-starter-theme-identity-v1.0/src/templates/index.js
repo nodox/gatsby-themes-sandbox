@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
+import styled, { css } from 'styled-components'
 import avatar from '../images/avatar.jpg';
 import theme from '../../theme.json'
-
 
 import '../styles/gatsby.css';
 import '../styles/main.css';
