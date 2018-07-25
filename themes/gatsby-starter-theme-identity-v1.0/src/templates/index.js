@@ -18,7 +18,12 @@ class Index extends React.Component {
 
   render() {
     const { pathContext } = this.props
-    const { displayName, displayPhoto, headline, socialIcons } = pathContext.data
+    const {
+      displayName,
+      displayPhoto,
+      headline,
+      socialIcons, 
+    } = pathContext.data
 
     return (
     	<div id="wrapper">

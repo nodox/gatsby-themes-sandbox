@@ -1,17 +1,5 @@
 const path = require(`path`);
 
-// exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-//   const { createNodeField } = boundActionCreators
-//   if (node.internal.type === `MarkdownRemark`) {
-//     const slug = createFilePath({ node, getNode, basePath: `pages` })
-//     createNodeField({
-//       node,
-//       name: `slug`,
-//       value: slug,
-//     })
-//   }
-// };
-
 function generateQueryTemplate(source, args, body) {
   // TODO: needs to make if compatible with no args
   const template = `
@@ -39,6 +27,41 @@ function composeQuery(queryList) {
 
 }
 
+function getSocialIcons(mappings, queryResult) {
+  const { socialIcons } = mappings
+  let socialIconsData = []
+
+
+  queryResult['data'][socialIcons.querySource][socialIcons.field].forEach(obj => {
+      const { name, url, className } = obj.node
+
+      const iconData = {
+        className: className,
+        html: name,
+        href: url,
+      }
+
+      socialIconsData.push(iconData)
+  })
+
+  return socialIconsData
+}
+
+function getHeadline(mappings, queryResult) {
+  const { headline } = mappings
+  return queryResult['data'][headline.querySource][headline.field]
+}
+
+function getDisplayName(mappings, queryResult) {
+  const { displayName } = mappings
+  return queryResult['data'][displayName.querySource][displayName.field]
+}
+
+function getDisplayPhoto(mappings, queryResult) {
+  const { displayPhoto } = mappings
+  return queryResult['data'][displayPhoto.querySource][displayPhoto.field]
+}
+
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
@@ -55,7 +78,6 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
             name
             displayName
             headline
-            email
             photo {
               sizes {
                 src
@@ -96,62 +118,40 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
       },
       displayPhoto: {
         querySource: "contentfulBio",
-        field: "displayPhoto",
+        field: "photo",
       },
       socialIcons: {
         querySource: "allContentfulSocialProfiles",
-        field: "displayPhoto",
+        field: "edges",
       },
     }
   }
 
 
   let identityData
-  // let socialIconsData = []
-  //
-  // const querySource = templateData['query']['source']
-  // const queryArgs = templateData['query']['args']
-  // const queryBody = templateData['query']['body']
-  // const { socialIcons } = templateData.mappings
-
 
   try {
     identityData = await graphql(composeQuery(templateData.query))
-
-    console.log(identityData);
-
-    // identityData['data'][querySource][socialIcons]['data'].forEach(profile => {
-    //     const { name, url } = profile
-    //
-    //     const iconData = {
-    //       className: `fa-${name.toLowerCase()}`,
-    //       html: name,
-    //       href: url,
-    //     }
-    //
-    //     socialIconsData.push(iconData)
-    // })
-
   } catch (e) {
     console.log(e);
   }
 
-  // let browserData = {
-  //   displayName: identityData['data'][querySource][templateData.mappings.displayName],
-  //   headline: identityData['data'][querySource][templateData.mappings.headline],
-  //   socialIcons: socialIconsData,
-  //   displayPhoto: identityData['data'][querySource][templateData.mappings.displayPhoto],
-  // }
-  //
-  // createPage({
-  //   path: "/",
-  //   component: path.resolve(`./src/templates/index.js`),
-  //   context: {
-  //     // Data passed to context is available in page queries as GraphQL variables.
-  //     // i.e. -> pathContext: {}
-  //     data: browserData,
-  //   },
-  // })
-  //
+  let browserData = {
+    displayName: getDisplayName(templateData.mappings, identityData),
+    headline: getHeadline(templateData.mappings, identityData),
+    socialIcons: getSocialIcons(templateData.mappings, identityData),
+    displayPhoto: getDisplayPhoto(templateData.mappings, identityData),
+  }
+
+  createPage({
+    path: "/",
+    component: path.resolve(`./src/templates/index.js`),
+    context: {
+      // Data passed to context is available in page queries as GraphQL variables.
+      // i.e. -> pathContext: {}
+      data: browserData,
+    },
+  })
+
 
 }
