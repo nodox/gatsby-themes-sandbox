@@ -62,16 +62,23 @@ function getDisplayPhoto(mappings, queryResult) {
   return queryResult['data'][displayPhoto.querySource][displayPhoto.field]
 }
 
+function getBackgroundImage(mappings, queryResult) {
+  const { backgroundImage } = mappings
+  return queryResult['data'][backgroundImage.querySource][backgroundImage.field]
+}
+
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
+  // TODO: Need to extract this into the parent file
+  // TODO: YAML is more expressive than json, worth looking into
   const templateData = {
     query: [
       {
         source: "contentfulBio",
         args: `
           name: {
-            regex: \"/identity/\"
+            regex: \"/identity/i\"
           }
         `,
         body: `{
@@ -95,17 +102,34 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
             }
           }
         `,
-        body: `{
-          edges {
-            node {
-              name
-              url
-              className
+        body: `
+          {
+            edges {
+              node {
+                name
+                url
+                className
+              }
             }
           }
-        }
         `,
       },
+      {
+        source: "contentfulAsset",
+        args: `
+          title: {
+            regex: "/(nyc-chinatown-bw)/i"
+          }
+        `,
+        body: `
+          {
+            title
+            sizes(maxWidth: 1200, quality: 95) {
+              src
+            }
+          }
+        `,
+      }
     ],
     mappings: {
       displayName: {
@@ -124,6 +148,10 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
         querySource: "allContentfulSocialProfiles",
         field: "edges",
       },
+      backgroundImage: {
+        querySource: "contentfulAsset",
+        field: "sizes",
+      },
     }
   }
 
@@ -131,7 +159,10 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   let identityData
 
   try {
-    identityData = await graphql(composeQuery(templateData.query))
+    let query = composeQuery(templateData.query)
+    identityData = await graphql(query)
+    console.log(identityData.data.contentfulAsset);
+
   } catch (e) {
     console.log(e);
   }
@@ -141,6 +172,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
     headline: getHeadline(templateData.mappings, identityData),
     socialIcons: getSocialIcons(templateData.mappings, identityData),
     displayPhoto: getDisplayPhoto(templateData.mappings, identityData),
+    backgroundImage: getBackgroundImage(templateData.mappings, identityData),
   }
 
   createPage({

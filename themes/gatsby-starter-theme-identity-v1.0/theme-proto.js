@@ -95,3 +95,19 @@ mappings:
   headline:
   email:
   socialIcons:
+
+// v0.0.4
+query:
+  source: `contentfulBio` // string
+  args:       // these can be combined in a long string without punctuation
+    limit: 1
+    skip: 1
+    filter: ``
+    sort: ``
+  body: ``
+mappings:
+  displayName:
+  displayPhoto:
+  headline:
+  email:
+  socialIcons:
