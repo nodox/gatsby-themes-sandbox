@@ -22,7 +22,7 @@ class Index extends React.Component {
       displayName,
       displayPhoto,
       headline,
-      socialIcons, 
+      socialIcons,
     } = pathContext.data
 
     return (
@@ -43,7 +43,11 @@ class Index extends React.Component {
     			<footer>
     				<ul className="icons">
               {socialIcons.map(({ className, href, html }, idx) => {
-                return (<li key={idx}><a href={href} className={className}>{html}</a></li>)
+                return (
+                  <li key={idx}>
+                    <a href={href} className={className}>{html}</a>
+                  </li>
+                )
               })}
     				</ul>
     			</footer>
@@ -52,7 +56,8 @@ class Index extends React.Component {
     		<footer id="footer">
     			<ul className="copyright">
 
-    				<li>&copy; {displayName}</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    				<li>&copy; {displayName}</li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
     			</ul>
     		</footer>
 
