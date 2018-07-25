@@ -1,5 +1,7 @@
-const gqgen = require('./gqgen')
+const generator = require('./generator')
+const extractor = require('./extractor')
 
 module.exports = {
-  gqgen: gqgen,
+  gqgenerate: generator,
+  gqextract: extractor,
 }
