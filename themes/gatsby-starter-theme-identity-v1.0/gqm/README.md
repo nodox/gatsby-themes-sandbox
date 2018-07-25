@@ -11,3 +11,5 @@ This is a Gatsby specific SDK.
 - tqm - themes manager
 - gtm - gatsby themes manager
 - gatsby-tm - gatsby themes manager
+- gtk - gatsby themes kit
+- gqk - gatsby query kit
