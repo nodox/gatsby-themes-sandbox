@@ -1,55 +1,5 @@
 const path = require(`path`);
-const { gqgen } = require('./gqm')
-
-function getSocialIcons(mappings, queryResult) {
-  const { socialIcons } = mappings
-  let socialIconsData = []
-
-
-  queryResult['data'][socialIcons.querySource][socialIcons.field].forEach(obj => {
-      const { name, url, className } = obj.node
-
-      const iconData = {
-        className: className,
-        html: name,
-        href: url,
-      }
-
-      socialIconsData.push(iconData)
-  })
-
-  return socialIconsData
-}
-
-function getHeadline(mappings, queryResult) {
-  const { headline } = mappings
-  return queryResult['data'][headline.querySource][headline.field]
-}
-
-function getDisplayName(mappings, queryResult) {
-  const { displayName } = mappings
-  return queryResult['data'][displayName.querySource][displayName.field]
-}
-
-function getDisplayPhoto(mappings, queryResult) {
-  const { displayPhoto } = mappings
-  return queryResult['data'][displayPhoto.querySource][displayPhoto.field]
-}
-
-function getBackgroundImage(mappings, queryResult) {
-  const { backgroundImage } = mappings
-  return queryResult['data'][backgroundImage.querySource][backgroundImage.field]
-}
-
-function getQueryValueByKey(key, mappings, query) {
-  const templateKey = key
-  const userMap = mappings[templateKey]
-
-  const source = userMap.querySource
-  const field = userMap.field
-
-  return query['data'][source][field]
-}
+const { gqextract, gqgenerate } = require('./gqm')
 
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -143,20 +93,19 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   let identityData
 
   try {
-    let query = gqgen.composeQuery(templateData.query)
+    let query = gqgenerate.composeQuery(templateData.query)
     identityData = await graphql(query)
-    console.log(identityData.data.contentfulAsset);
 
   } catch (e) {
     console.log(e);
   }
 
   let browserData = {
-    displayName: getQueryValueByKey('displayName', templateData.mappings, identityData),
-    headline: getQueryValueByKey('headline', templateData.mappings, identityData),
-    socialIcons: getQueryValueByKey('socialIcons', templateData.mappings, identityData),
-    displayPhoto: getQueryValueByKey('displayPhoto', templateData.mappings, identityData),
-    backgroundImage: getQueryValueByKey('backgroundImage', templateData.mappings, identityData),
+    displayName: gqextract.getTemplateValueByKey('displayName', templateData.mappings, identityData),
+    headline: gqextract.getTemplateValueByKey('headline', templateData.mappings, identityData),
+    socialIcons: gqextract.getTemplateValueByKey('socialIcons', templateData.mappings, identityData),
+    displayPhoto: gqextract.getTemplateValueByKey('displayPhoto', templateData.mappings, identityData),
+    backgroundImage: gqextract.getTemplateValueByKey('backgroundImage', templateData.mappings, identityData),
   }
 
   createPage({
