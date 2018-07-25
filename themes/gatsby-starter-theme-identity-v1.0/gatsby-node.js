@@ -1,31 +1,5 @@
 const path = require(`path`);
-
-function generateQueryTemplate(source, args, body) {
-  // TODO: needs to make if compatible with no args
-  const template = `
-    ${source} (
-      ${args}
-    )
-    ${body}
-  `
-  return template
-}
-
-function composeQuery(queryList) {
-  var masterQuery = ''
-  queryList.forEach(({ source, args, body }) => {
-    let partial = generateQueryTemplate(source, args, body)
-    masterQuery = masterQuery.concat(partial)
-  })
-
-  const graphqlQuery = `
-    {
-      ${masterQuery}
-    }
-  `
-  return graphqlQuery
-
-}
+const { gqgen } = require('./gqm')
 
 function getSocialIcons(mappings, queryResult) {
   const { socialIcons } = mappings
@@ -169,7 +143,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   let identityData
 
   try {
-    let query = composeQuery(templateData.query)
+    let query = gqgen.composeQuery(templateData.query)
     identityData = await graphql(query)
     console.log(identityData.data.contentfulAsset);
 
