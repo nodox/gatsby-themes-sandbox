@@ -64,6 +64,9 @@ mappings:
   displayName:
     querySource: contentfulBio
     field: displayName
+  copyright:
+    querySource: contentfulBio
+    field: displayName
   headline:
     querySource: contentfulBio
     field: headline

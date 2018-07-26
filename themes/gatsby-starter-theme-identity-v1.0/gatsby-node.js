@@ -9,6 +9,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
 
   const browserData = {
     displayName: gqextract.getTemplateValueByKey('displayName', config.mappings, data),
+    copyright: gqextract.getTemplateValueByKey('copyright', config.mappings, data),
     headline: gqextract.getTemplateValueByKey('headline', config.mappings, data),
     socialIcons: gqextract.getTemplateValueByKey('socialIcons', config.mappings, data),
     displayPhoto: gqextract.getTemplateValueByKey('displayPhoto', config.mappings, data),

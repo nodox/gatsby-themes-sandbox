@@ -21,6 +21,7 @@ class Index extends React.Component {
         src: avatar,
       },
       displayName: 'Jane Doe',
+      copyright: 'Hammer Records. Ltd',
       headline: 'senior psychonautics engineer',
       socialIcons: [
         {
@@ -49,6 +50,7 @@ class Index extends React.Component {
     this.headline = this.data.headline || this.default.headline
     this.socialIcons = this.data.socialIcons || this.default.socialIcons
     this.backgroundImage = this.data.backgroundImage || this.default.backgroundImage
+    this.copyright = this.data.copyright || this.default.copyright
   }
 
 
@@ -86,7 +88,7 @@ class Index extends React.Component {
     		<footer id="footer">
     			<ul className="copyright">
 
-    				<li>&copy; {this.displayName}</li>
+    				<li>&copy; {this.copyright}</li>
             <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
     			</ul>
     		</footer>
