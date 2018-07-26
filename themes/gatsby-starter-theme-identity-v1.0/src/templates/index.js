@@ -1,51 +1,14 @@
 import React from 'react';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import avatar from '../images/avatar.jpg';
 import bg from '../images/bg.jpg';
-import theme from '../../theme.json'
-import { injectGlobal } from 'styled-components';
+import config from '../../identity.yaml'
 
 import '../styles/gatsby.css';
 import '../styles/main.css';
-
-function getLinearGradient(args = null) {
-  let base = `60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)`
-
-  if (args !== null) {
-    base = args
-  }
-
-  return {
-    moz: `-moz-linear-gradient(${base})`,
-    webkit: `-webkit-linear-gradient(${base})`,
-    ms: `-ms-linear-gradient(${base})`,
-    default: `linear-gradient(${base})`,
-  }
-
-}
-
-function applyBackground(image) {
-  // TODO: Since body tag is not exposed we need to global style body. Find a better way by refectoring css to be JS
-  // TODO: Add option to change overlay image
-  // TODO: Add option to adjust / add the linear gradiant
-
-  injectGlobal`
-    body {
-      height: 100%;
-  		background-color: #ffffff;
-  		background-image: url(${image.src});
-  		background-image: url(${image.src});
-  		background-image: url(${image.src});
-  		background-image: url(${image.src});
-  		background-repeat: no-repeat;
-  		background-size: cover;
-  		background-position: top left, center center, bottom center;
-  		background-attachment: fixed;
-    }
-  `;
-}
+import { applyCustomStyles, applyBackground } from '../styles';
 
 class Index extends React.Component {
   constructor(props) {
@@ -75,12 +38,12 @@ class Index extends React.Component {
           url: 'https://facebook.com',
           name: 'Facebook'
         },
-      ]
+      ],
+      styles: '',
     }
 
+    // data config
     this.data = this.props.pathContext.data
-    console.log(this.data);
-
     this.displayName = this.data.displayName || this.default.displayName
     this.displayPhoto = this.data.displayPhoto || this.default.displayPhoto
     this.headline = this.data.headline || this.default.headline
@@ -90,9 +53,8 @@ class Index extends React.Component {
 
 
   render() {
-
-    // TODO: Move to better location. Constructor?
     applyBackground(this.backgroundImage)
+    applyCustomStyles(config)
 
     return (
     	<div id="wrapper">
@@ -135,3 +97,5 @@ class Index extends React.Component {
 }
 
 export default Index
+
+// TODO: figure out a way to do string interpolation on graphql query

@@ -59,6 +59,7 @@ query: |
     }
 
   }
+
 mappings:
   displayName:
     querySource: contentfulBio
@@ -75,3 +76,5 @@ mappings:
   backgroundImage:
     querySource: bgPhoto
     field: sizes
+
+styles:
