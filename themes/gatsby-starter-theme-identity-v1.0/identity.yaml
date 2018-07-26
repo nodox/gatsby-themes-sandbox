@@ -32,7 +32,9 @@ query: |
         }
       }
     }
-    contentfulAsset (
+
+
+    bgPhoto: contentfulAsset (
       title: {
         regex: "/(nyc-chinatown-bw)/i"
       }
@@ -43,6 +45,19 @@ query: |
         src
       }
     }
+
+    avatarPhoto: contentfulAsset (
+      title: {
+        regex: "/(steven)/i"
+      }
+    )
+    {
+      title
+      sizes(maxWidth: 120, quality: 95) {
+        src
+      }
+    }
+
   }
 mappings:
   displayName:
@@ -52,11 +67,11 @@ mappings:
     querySource: contentfulBio
     field: headline
   displayPhoto:
-    querySource: contentfulBio
-    field: photo
+    querySource: avatarPhoto
+    field: sizes
   socialIcons:
     querySource: allContentfulSocialProfiles
     field: edges
   backgroundImage:
-    querySource: contentfulAsset
+    querySource: bgPhoto
     field: sizes

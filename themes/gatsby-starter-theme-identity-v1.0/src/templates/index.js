@@ -55,9 +55,7 @@ class Index extends React.Component {
         src: bg,
       },
       displayPhoto: {
-        sizes: {
-          src: avatar,
-        },
+        src: avatar,
       },
       displayName: 'Jane Doe',
       headline: 'senior psychonautics engineer',
@@ -81,6 +79,7 @@ class Index extends React.Component {
     }
 
     this.data = this.props.pathContext.data
+    console.log(this.data);
 
     this.displayName = this.data.displayName || this.default.displayName
     this.displayPhoto = this.data.displayPhoto || this.default.displayPhoto
@@ -102,8 +101,7 @@ class Index extends React.Component {
     			<header>
     				<span className="avatar">
               <img
-                style={{ width: '120px', height: '120px' }}
-                src={this.displayPhoto.sizes.src} alt="" />
+                src={this.displayPhoto.src} alt="" />
             </span>
     				<h1>{this.displayName}</h1>
     				<p>{this.headline}</p>
