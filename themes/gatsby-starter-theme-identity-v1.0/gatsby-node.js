@@ -4,7 +4,7 @@ const { gqextract, gqloader } = require('./gqm')
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
-  const config = gqloader.load(path.resolve('./identity.yaml'))
+  const config = await gqloader.loadJson(path.resolve('./theme.json'))
   const data = await gqloader.fetch(graphql, config.query)
 
   const browserData = {

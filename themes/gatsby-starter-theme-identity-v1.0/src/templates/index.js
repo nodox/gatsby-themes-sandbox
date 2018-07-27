@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components'
 import avatar from '../images/avatar.jpg';
 import bg from '../images/bg.jpg';
-import config from '../../identity.yaml'
+import config from '../../theme.json'
 
 import '../styles/gatsby.css';
 import '../styles/main.css';

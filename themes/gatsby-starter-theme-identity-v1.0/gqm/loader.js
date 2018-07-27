@@ -1,9 +1,13 @@
 const yaml = require('js-yaml');
 const fs = require('fs-extra')
 
-exports.load = (path, encoding = 'utf8') => {
+exports.loadYaml = (path, encoding = 'utf8') => {
   // Loads yaml file
   return yaml.safeLoad(fs.readFileSync(path, encoding))
+}
+
+exports.loadJson = async (path, encoding = 'utf8') => {
+  return await fs.readJson(path)
 }
 
 exports.fetch = async (graphql, query) => {
