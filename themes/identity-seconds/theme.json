@@ -28,5 +28,5 @@
    "field": "sizes"
   }
  },
- "styles": "#footer {\n  color: blue;\n}\n"
+ "styles": "#footer {\n  color: red;\n}\n"
 }

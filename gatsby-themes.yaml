@@ -84,4 +84,95 @@ themes:
         querySource: bgPhoto
         field: sizes
 
-    styles:
+    styles: |
+      #footer {
+        color: blue;
+      }
+  identity-seconds:
+    develop: false
+    cms: contentful
+    query: |
+      {
+        contentfulBio (
+          name: {
+            regex: "/identity/i"
+          }
+        )
+        {
+          name
+          displayName
+          headline
+          photo {
+            sizes {
+              src
+            }
+          }
+        }
+
+        allContentfulSocialProfiles (
+          filter: {
+            name: {
+              regex: "/(github|medium|twitter)/i"
+            }
+          }
+        )
+        {
+          edges {
+            node {
+              name
+              url
+              className
+            }
+          }
+        }
+
+
+        bgPhoto: contentfulAsset (
+          title: {
+            regex: "/(nyc-chinatown-bw)/i"
+          }
+        )
+        {
+          title
+          sizes(maxWidth: 1200, quality: 95) {
+            src
+          }
+        }
+
+        avatarPhoto: contentfulAsset (
+          title: {
+            regex: "/(steven)/i"
+          }
+        )
+        {
+          title
+          sizes(maxWidth: 120, quality: 95) {
+            src
+          }
+        }
+
+      }
+    mappings:
+      displayName:
+        querySource: contentfulBio
+        field: displayName
+      copyright:
+        querySource: contentfulBio
+        field: displayName
+      headline:
+        querySource: contentfulBio
+        field: headline
+      displayPhoto:
+        querySource: avatarPhoto
+        field: sizes
+      socialIcons:
+        querySource: allContentfulSocialProfiles
+        field: edges
+      backgroundImage:
+        querySource: bgPhoto
+        field: sizes
+
+    styles: |
+      #footer {
+        color: red;
+      }
