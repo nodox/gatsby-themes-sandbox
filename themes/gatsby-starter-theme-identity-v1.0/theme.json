@@ -1,4 +1,5 @@
 {
+ "build": true,
  "develop": true,
  "cms": "contentful",
  "query": "{\n  contentfulBio (\n    name: {\n      regex: \"/identity/i\"\n    }\n  )\n  {\n    name\n    displayName\n    headline\n    photo {\n      sizes {\n        src\n      }\n    }\n  }\n\n  allContentfulSocialProfiles (\n    filter: {\n      name: {\n        regex: \"/(github|medium|twitter)/i\"\n      }\n    }\n  )\n  {\n    edges {\n      node {\n        name\n        url\n        className\n      }\n    }\n  }\n\n\n  bgPhoto: contentfulAsset (\n    title: {\n      regex: \"/(nyc-chinatown-bw)/i\"\n    }\n  )\n  {\n    title\n    sizes(maxWidth: 1200, quality: 95) {\n      src\n    }\n  }\n\n  avatarPhoto: contentfulAsset (\n    title: {\n      regex: \"/(steven)/i\"\n    }\n  )\n  {\n    title\n    sizes(maxWidth: 120, quality: 95) {\n      src\n    }\n  }\n\n}\n",

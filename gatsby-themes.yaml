@@ -1,6 +1,7 @@
 themesDirectory: themes
 themes:
   gatsby-starter-theme-identity-v1.0:
+    build: true
     develop: true
     cms: contentful
     query: |
@@ -89,7 +90,8 @@ themes:
         color: blue;
       }
   identity-seconds:
-    develop: false
+    build: true
+    develop: true
     cms: contentful
     query: |
       {
